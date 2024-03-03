@@ -15,6 +15,6 @@ namespace AlgoLibrary
 
         }
 
-        public DbSet<UserModel> Users { get; set; }
+        public DbSet<UserModel> User { get; set; }
     }
 }

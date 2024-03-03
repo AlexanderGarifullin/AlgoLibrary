@@ -1,20 +1,26 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using AlgoLibrary.Models;
 
 namespace AlgoLibrary.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppDbContext _context;
+
+        public HomeController(AppDbContext context)
         {
-            _logger = logger;
+            _context = context;
+
         }
+
+
 
         public IActionResult Index()
         {
+            List<UserModel> users = _context.User.ToList();
             return View();
         }
 
