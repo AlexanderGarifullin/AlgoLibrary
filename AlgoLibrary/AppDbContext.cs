@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using AlgoLibrary.Models;
 
 namespace AlgoLibrary
 {
@@ -13,5 +14,7 @@ namespace AlgoLibrary
         {
 
         }
+
+        public DbSet<UserModel> Users { get; set; }
     }
 }
