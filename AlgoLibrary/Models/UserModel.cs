@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace AlgoLibrary.Models
 {
@@ -15,6 +16,7 @@ namespace AlgoLibrary.Models
             set { userId = value; }
         }
 
+        [MaxLength(40)]
         public string Login
         {
             get { return login; }
@@ -27,6 +29,7 @@ namespace AlgoLibrary.Models
             set { password = value; }
         }
 
+        [EnumDataType(typeof(UserRole))]
         public string Role
         {
             get { return role; } 
