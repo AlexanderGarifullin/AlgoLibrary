@@ -15,4 +15,34 @@ html {
 
 body {
   margin-bottom: 60px;
+  background: #222;
+}
+
+#menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: inherit; 
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+#menu .left,
+#menu .right {
+    display: flex;
+}
+
+#menu a {
+    text-decoration: none;
+    color: #efefef;
+    margin-right: 10px;
+    font-size: 20px;
+}
+
+#menu a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    color: #efefef;
 }
