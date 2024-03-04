@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using AlgoLibrary.Models;
 
 namespace AlgoLibrary.Controllers
 {
@@ -11,7 +12,8 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Users()
         {
-            return View();
+            List<UserModel> users = _context.User.ToList();
+            return View(users);
         }
     }
 }

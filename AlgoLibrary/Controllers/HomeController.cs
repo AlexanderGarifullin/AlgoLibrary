@@ -18,7 +18,6 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Index()
         {
-            List<UserModel> users = _context.User.ToList();
             return View();
         }
 

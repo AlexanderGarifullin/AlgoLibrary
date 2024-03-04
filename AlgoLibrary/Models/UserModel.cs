@@ -7,7 +7,7 @@ namespace AlgoLibrary.Models
     {
         private int userId;
         private string login;
-        private int password;
+        private string password;
         private string role;
         [Key]
         public int UserId
@@ -23,7 +23,7 @@ namespace AlgoLibrary.Models
             set { login = value; }
         }
 
-        public int Password
+        public string Password
         {
             get { return password; }
             set { password = value; }

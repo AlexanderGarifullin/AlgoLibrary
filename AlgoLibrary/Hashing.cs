@@ -8,7 +8,7 @@ namespace AlgoLibrary
     public class Hashing
     {
 
-        private static readonly byte[] key = Encoding.UTF8.GetBytes(Key.MyKey);
+        private static readonly byte[] key = KeyDerivation.DeriveKey(Key.MyKey);
 
         public static string EncryptPassword(string password)
         {
