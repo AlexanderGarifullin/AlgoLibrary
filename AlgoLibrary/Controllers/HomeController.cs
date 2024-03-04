@@ -1,7 +1,6 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using AlgoLibrary.Models;
 
 namespace AlgoLibrary.Controllers
 {
@@ -15,7 +14,6 @@ namespace AlgoLibrary.Controllers
             _context = context;
 
         }
-
 
 
         public IActionResult Index()
