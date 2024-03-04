@@ -1,23 +1,59 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace AlgoLibrary
 {
     public class Hashing
     {
-        static int HashPassword(string password)
+
+        private static readonly byte[] key = Encoding.UTF8.GetBytes(Key.MyKey);
+
+        public static string EncryptPassword(string password)
         {
-            using (SHA256 sha256Hash = SHA256.Create())
+            using (Aes aesAlg = Aes.Create())
             {
-                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (byte b in bytes)
+                aesAlg.Key = key;
+                aesAlg.GenerateIV();
+
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msEncrypt = new MemoryStream())
                 {
-                    builder.Append(b.ToString("x2"));
+                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    {
+                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        {
+                            swEncrypt.Write(password);
+                        }
+                    }
+                    return Convert.ToBase64String(aesAlg.IV.Concat(msEncrypt.ToArray()).ToArray());
                 }
-                string hashedPasswordString = builder.ToString();
-                int hashedPasswordInt = Convert.ToInt32(hashedPasswordString.Substring(0, 8), 16);
-                return hashedPasswordInt;
+            }
+        }
+
+        public static string DecryptPassword(string encryptedPassword)
+        {
+            byte[] cipherText = Convert.FromBase64String(encryptedPassword);
+
+            using (Aes aesAlg = Aes.Create())
+            {
+                aesAlg.Key = key;
+                aesAlg.IV = cipherText.Take(16).ToArray();
+
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText.Skip(16).ToArray()))
+                {
+                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    {
+                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        {
+                            return srDecrypt.ReadToEnd();
+                        }
+                    }
+                }
             }
         }
     }

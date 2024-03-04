@@ -3,10 +3,10 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 AlgoLibrary/AlgoLibrary/appsettings.json
-
-
 AlgoLibrary/appsettings.json
 
+AlgoLibrary/AlgoLibrary/key.cs
+AlgoLibrary/key.cs
 
 # User-specific files
 *.rsuser
