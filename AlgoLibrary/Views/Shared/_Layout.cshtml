@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <script src="~/js/mathjax-scripts.js"></script>
+     <script>
+        window.onload = function() {
+            var usernameElement = document.getElementById("username");
+            usernameElement.textContent = '@AlgoLibrary.SessionParameters.UserName';
+        };
+    </script>
 </head>
 <body>
     <menu id="menu">

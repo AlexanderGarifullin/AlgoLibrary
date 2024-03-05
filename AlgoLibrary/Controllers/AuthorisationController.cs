@@ -20,14 +20,24 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult Login(string login, string password)
         {
-
+            DeleteSessionParameters();    
             var user = _context.User.FirstOrDefault(u => u.Login == login && u.Password == Hashing.EncryptPassword(password));
             if (user != null)
             {
-
+                SessionParameters.UserName = user.Login;
+                SessionParameters.UserId = user.UserId;
+                UserRole role = UserRole.User;
+                if (user.Role == "Admin") role = UserRole.Admin;
+                else if (user.Role == "Moderator") role = UserRole.Moderator;
                 return RedirectToAction("Index", "Home");
             }
             return View("Authorisation");
+        }
+        private void DeleteSessionParameters()
+        {
+            SessionParameters.UserName = "";
+            SessionParameters.UserId = -1;
+            SessionParameters.UserRoot = UserRole.User;
         }
     }
 }

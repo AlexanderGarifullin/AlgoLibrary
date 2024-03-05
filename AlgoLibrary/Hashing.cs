@@ -15,9 +15,9 @@ namespace AlgoLibrary
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = key;
-                aesAlg.GenerateIV();
+                aesAlg.Mode = CipherMode.ECB;
 
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
+                ICryptoTransform encryptor = aesAlg.CreateEncryptor();
 
                 using (MemoryStream msEncrypt = new MemoryStream())
                 {
@@ -28,7 +28,7 @@ namespace AlgoLibrary
                             swEncrypt.Write(password);
                         }
                     }
-                    return Convert.ToBase64String(aesAlg.IV.Concat(msEncrypt.ToArray()).ToArray());
+                    return Convert.ToBase64String(msEncrypt.ToArray());
                 }
             }
         }
@@ -41,11 +41,11 @@ namespace AlgoLibrary
             using (Aes aesAlg = Aes.Create())
             {
                 aesAlg.Key = key;
-                aesAlg.IV = cipherText.Take(16).ToArray();
+                aesAlg.Mode = CipherMode.ECB;
 
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+                ICryptoTransform decryptor = aesAlg.CreateDecryptor();
 
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText.Skip(16).ToArray()))
+                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                 {
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
