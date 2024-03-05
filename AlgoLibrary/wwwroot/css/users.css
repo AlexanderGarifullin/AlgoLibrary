@@ -12,27 +12,27 @@
     border: 1px solid #ddd;
 }
 
-    .table th,
-    .table td {
-        padding: 12px;
-    }
+.table th,
+.table td {
+    padding: 12px;
+}
 
-    .table th {
-        background-color: #222;
-        color: #efefef;
-    }
+.table th {
+    background-color: #222;
+    color: #efefef;
+}
 
-    .table tr:nth-child(even) {
-        background-color: #333;
-    }
+.table tr:nth-child(even) {
+    background-color: #333;
+}
 
-    .table tr:hover {
-        background-color: #444;
-    }
+.table tr:hover {
+    background-color: #444;
+}
 
 .btn-primary, .btn-edit, .btn-delete {
-    background-color: #6c757d; /* серый цвет */
-    border-color: #6c757d; /* серый цвет */
+    background-color: #6c757d;
+    border-color: #6c757d;
     color: #fff;
     padding: 8px 16px;
     border-radius: 4px;
@@ -41,6 +41,6 @@
     margin-right: 8px;
 }
 
-    .btn-primary:hover, .btn-edit:hover, .btn-delete:hover {
-        background-color: #5a6268; /* темно-серый цвет при наведении */
-    }
+.btn-primary:hover, .btn-edit:hover, .btn-delete:hover {
+    background-color: #5a6268; 
+}
