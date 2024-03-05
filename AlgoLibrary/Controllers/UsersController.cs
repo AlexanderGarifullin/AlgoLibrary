@@ -74,7 +74,23 @@ namespace AlgoLibrary.Controllers
             } else
             {
                 // edit
-                return RedirectToAction(nameof(Users));
+                try
+                {
+                    var existingUser = _context.User.FirstOrDefault(u => u.UserId == id);
+                    if (existingUser == null)
+                    {
+                        return NotFound();
+                    }
+                    existingUser.Login = login;
+                    existingUser.Password = Hashing.EncryptPassword(password);
+                    existingUser.Role = role;
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Users));
+                }
+                catch (Exception e)
+                {
+                    return View("Change", new UserModel());
+                }
             }
         }
 
