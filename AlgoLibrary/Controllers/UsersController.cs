@@ -20,7 +20,6 @@ namespace AlgoLibrary.Controllers
             List<UserModel> users = _context.User.ToList();
             return View(users);
         }
-        [HttpPost]
         public IActionResult Delete(int id)
         {
             var userToDelete = _context.User.Find(id);
