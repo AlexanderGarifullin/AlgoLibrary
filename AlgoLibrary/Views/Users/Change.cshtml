@@ -18,7 +18,7 @@
                 var roleSelect = document.getElementById('role');
                 var header = document.getElementById('typePage');
                 var userid = document.getElementById('userId');
-
+                console.log(userModel.userId);
                 header.textContent = "Изменить пользователя";
                 userid.value = userModel.userId;
                 loginInput.value = userModel.login;
@@ -32,8 +32,8 @@
 </head>
 <body>
     <h1 id="typePage">Добавить пользователя</h1>
-    <form method="post">
-        <div id="userId" style="display: none;"></div>
+    <form method="post" action="/Users/Create">
+        <input type="hidden" id="userId" name="userId" value="" />
         <div class="form-group">
             <label for="login">Логин:</label>
             <input type="text" class="form-control" id="login" name="login" value="" required>

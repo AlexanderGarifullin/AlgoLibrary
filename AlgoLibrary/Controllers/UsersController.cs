@@ -20,7 +20,6 @@ namespace AlgoLibrary.Controllers
             List<UserModel> users = _context.User.ToList();
             return View(users);
         }
-
         [HttpPost]
         public IActionResult Delete(int id)
         {
@@ -34,7 +33,7 @@ namespace AlgoLibrary.Controllers
             _context.User.Remove(userToDelete);
             _context.SaveChanges();
 
-            return RedirectToAction(nameof(Users));
+            return RedirectToAction("Users");
         }
 
         public IActionResult Create()
@@ -49,6 +48,42 @@ namespace AlgoLibrary.Controllers
                 return NotFound();
             }
             return View("Change", user);
+        }
+
+        [HttpPost]
+        public IActionResult Create(UserModel userModel)
+        {
+            int id = userModel.UserId;
+            string login = userModel.Login;
+            string password = userModel.Password;
+            string role = userModel.Role;
+            if (!IsCorrectUserData(id, login, password, role)) return View("Change", new UserModel());
+            if (id == 0)
+            {
+                // add
+                try
+                {
+                    userModel.Password = Hashing.EncryptPassword(password);
+                    _context.User.Add(userModel);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Users));
+                }
+                catch (Exception e)
+                {
+                    return View("Change", new UserModel());
+                }              
+            } else
+            {
+                // edit
+                return RedirectToAction(nameof(Users));
+            }
+        }
+
+        private bool IsCorrectUserData(int id, string login, string password, string role)
+        {
+            if (login.Length > 40) return false;
+            if (password.Length > 256) return false;
+            return true;
         }
     }
 }

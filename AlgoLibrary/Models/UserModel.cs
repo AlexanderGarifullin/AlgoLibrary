@@ -1,5 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AlgoLibrary.Models
 {
@@ -10,6 +13,7 @@ namespace AlgoLibrary.Models
         private string password;
         private string role;
         [Key]
+        [HiddenInput(DisplayValue = false)]
         public int UserId
         {
             get { return userId; }
@@ -29,7 +33,7 @@ namespace AlgoLibrary.Models
             set { password = value; }
         }
 
-        [EnumDataType(typeof(UserRole))]
+        [Column(TypeName = "enum('Admin', 'Moderator', 'User')")]
         public string Role
         {
             get { return role; } 
