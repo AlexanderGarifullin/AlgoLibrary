@@ -29,6 +29,7 @@ namespace AlgoLibrary.Controllers
                 UserRole role = UserRole.User;
                 if (user.Role == "Admin") role = UserRole.Admin;
                 else if (user.Role == "Moderator") role = UserRole.Moderator;
+                SessionParameters.UserRoot = role;
                 return RedirectToAction("Index", "Home");
             }
             return View("Authorisation");
@@ -38,6 +39,15 @@ namespace AlgoLibrary.Controllers
             SessionParameters.UserName = "";
             SessionParameters.UserId = -1;
             SessionParameters.UserRoot = UserRole.User;
+
         }
+
+        [HttpPost]
+        public IActionResult Logout()
+        {
+            DeleteSessionParameters();
+            return RedirectToAction("Authorisation");
+        }
+
     }
 }

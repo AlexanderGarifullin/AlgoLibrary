@@ -22,6 +22,12 @@
             </div>
             <button type="submit" class="btn btn-primary">Войти</button>
         </form>
+        @if (SessionParameters.UserId != -1)
+        {
+                <form asp-controller="Authorisation" asp-action="Logout" method="post">
+                    <button type="submit" class="btn btn-primary">Выйти</button>
+                </form>
+        }
     </div>
 </body>
 </html>
