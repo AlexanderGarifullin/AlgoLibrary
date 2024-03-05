@@ -1,0 +1,57 @@
+﻿@model UserModel
+
+@{
+    Layout = "_Layout";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />
+    <script>
+            var userModel = @Html.Raw(Json.Serialize(Model));
+             console.log(userModel);
+            document.addEventListener('DOMContentLoaded', function () {
+            if (userModel !== null && userModel.login !== null) {
+                var loginInput = document.getElementById('login');
+                var passwordInput = document.getElementById('password');
+                var roleSelect = document.getElementById('role');
+                var header = document.getElementById('typePage');
+                var userid = document.getElementById('userId');
+
+                header.textContent = "Изменить пользователя";
+                userid.value = userModel.userId;
+                loginInput.value = userModel.login;
+                passwordInput.value = '@Html.Raw(Hashing.DecryptPassword(Model.Password))';
+                roleSelect.value = userModel.role;
+            }
+        });
+    </script>
+
+    <title>Добавить пользователя</title>
+</head>
+<body>
+    <h1 id="typePage">Добавить пользователя</h1>
+    <form method="post">
+        <div id="userId" style="display: none;"></div>
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" class="form-control" id="login" name="login" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="text" class="form-control" id="password" name="password" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="role">Роль:</label>
+           <select class="form-control" id="role" name="role" required>
+                <option value="Admin">Администратор</option>
+                <option value="Moderator">Модератор</option>
+                <option value="User">Пользователь</option>
+        </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Users" class="btn btn-primary">Отмена</a>
+    </form>
+</body>
+</html>

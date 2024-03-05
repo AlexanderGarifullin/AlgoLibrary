@@ -35,6 +35,7 @@ namespace AlgoLibrary
 
         public static string DecryptPassword(string encryptedPassword)
         {
+            if (encryptedPassword == null) return "";
             byte[] cipherText = Convert.FromBase64String(encryptedPassword);
 
             using (Aes aesAlg = Aes.Create())
