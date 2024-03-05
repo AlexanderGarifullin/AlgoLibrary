@@ -1,0 +1,22 @@
+﻿.form-container {
+    text-align: center;
+    margin-top: 100px;
+}
+
+    .form-container h2 {
+        margin-bottom: 20px;
+    }
+
+    .form-container input,
+    .form-container button {
+        margin-bottom: 10px;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .form-container button {
+        margin-top: 10px
+    }

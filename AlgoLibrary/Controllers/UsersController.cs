@@ -22,6 +22,7 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Delete(int id)
         {
+            if (id == SessionParameters.UserId) return RedirectToAction("Users");
             var userToDelete = _context.User.Find(id);
 
             if (userToDelete == null)
@@ -76,6 +77,7 @@ namespace AlgoLibrary.Controllers
                 // edit
                 try
                 {
+                    if (id == SessionParameters.UserId) RedirectToAction(nameof(Users));
                     var existingUser = _context.User.FirstOrDefault(u => u.UserId == id);
                     if (existingUser == null)
                     {
