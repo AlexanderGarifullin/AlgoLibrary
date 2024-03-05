@@ -10,10 +10,16 @@ namespace AlgoLibrary.Controllers
         {
             _context = context;
         }
+
         public IActionResult Users()
         {
+            if (SessionParameters.UserRoot != UserRole.Admin)
+            {
+                return View("Rights");
+            }
             List<UserModel> users = _context.User.ToList();
             return View(users);
         }
+       
     }
 }
