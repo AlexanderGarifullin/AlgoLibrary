@@ -2,6 +2,41 @@
     Layout = "_Layout";
 }
 
+@{
+    string markdownContent = ViewBag.MarkdownContent;
+}
+
 <html>
-    <haed>home</haed>
+<head>
+    <title>Home</title>
+    <link rel="stylesheet" href="~/css/articles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="container">
+        <div class="contents">
+            <h2>Содержимое</h2>
+             <div class="articles">
+                <ol>
+                    <li>Сортировка
+                        <ol <ol type="a">
+                            <li>Сортировка пузырьком</li>
+                            <li>Сортировка выбором</li>
+                        </ol>
+                    </li>
+                    <li>Бинарный поиск</li>
+                </ol>
+            </div>
+        </div>
+        <div class="vertical-line"></div>
+        <div class="content">
+            <h2>@ViewBag.ArticleTitle</h2>
+            <article>
+                @Html.Raw(markdownContent)
+            </article>
+             <footer>
+                Algomaster, 2024
+            </footer>
+        </div>
+    </div>
+</body> 
 </html>
