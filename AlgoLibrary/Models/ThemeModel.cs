@@ -17,6 +17,7 @@ namespace AlgoLibrary.Models
         }
 
         [MaxLength(50)]
+        [Required]
         public string Name
         {
             get { return name; }
