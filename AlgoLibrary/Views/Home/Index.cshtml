@@ -14,6 +14,10 @@
 <body>
     <div class="container">
         <div class="contents">
+            @if (SessionParameters.UserRoot != UserRole.User)
+            {
+               <a href="~/Home/HomeRedirection" class="btn btn-primary">Изменить</a>
+            }
             <h2>Содержимое</h2>
              <div class="articles">
                 <ol>
