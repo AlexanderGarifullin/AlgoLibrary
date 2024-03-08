@@ -19,6 +19,6 @@ namespace AlgoLibrary
         public DbSet<ThemeModel> Theme { get; set; }
         public DbSet<ArticleModel> Article { get; set; }
         public DbSet<FolderModel> Folder { get; set; }
-
+        public DbSet<Folder_ArticleModel> Folder_Article { get; set;}
     }
 }
