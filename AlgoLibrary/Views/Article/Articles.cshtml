@@ -1,3 +1,41 @@
-﻿@{
+﻿@model List<ArticleModel>
+
+@{
     Layout = "_Layout";
+    var themeName = ViewData["ThemeName"] as string;
 }
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Конспекты по теме</title>
+</head>
+<body>
+    <h1>Конспекты по теме "@themeName"</h1>
+    <a asp-action="Create" class="btn btn-primary">Добавить конспект</a>
+    <button type="button" onclick="saveOrder()" class="btn btn-primary">Сохранить порядок</button>
+    <h2 id="successMessage" style="display: none;">Порядок изменен успешно!</h2>
+    <table id="articlesTable" class="table">
+    <thead>
+        <tr> 
+            <th>Название конспекта</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var articlie in Model)
+            {
+                    <tr data-theme-id="@articlie.ArticleId">
+                        <td>@articlie.Name</td>
+                        <td>
+                            <button type="button" class="btn-primary" onclick="moveRowUp(this)">↑</button> |
+                            <button type="button"class="btn-primary" onclick="moveRowDown(this)">↓</button> |
+                            <a asp-action="Edit" asp-route-id="@articlie.ArticleId" class="btn-edit">Изменить</a> |
+                            <a asp-action="Delete" asp-route-id="@articlie.ArticleId" class="btn-delete">Удалить</a>
+                        </td>
+                    </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
