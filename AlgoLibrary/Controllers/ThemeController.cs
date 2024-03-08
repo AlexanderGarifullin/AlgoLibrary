@@ -1,6 +1,8 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
+using System.Data;
 
 namespace AlgoLibrary.Controllers
 {
@@ -60,14 +62,20 @@ namespace AlgoLibrary.Controllers
                 // edit
                 try
                 {
-
+                    var existingTheme = _context.Theme.FirstOrDefault(u => u.ThemeId == id);
+                    if (existingTheme == null)
+                    {
+                        return NotFound();
+                    }
+                    existingTheme.Name = name;
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Themes));
                 }
                 catch (Exception e)
                 {
                     return View("ThemeChange", new ThemeModel());
                 }
             }
-            return View("ThemeChange", new ThemeModel());
         }
     }
 }
