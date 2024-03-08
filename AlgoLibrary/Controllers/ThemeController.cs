@@ -77,5 +77,20 @@ namespace AlgoLibrary.Controllers
                 }
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            var themeToDelete = _context.Theme.Find(id);
+
+            if (themeToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _context.Theme.Remove(themeToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("Themes");
+        }
     }
 }
