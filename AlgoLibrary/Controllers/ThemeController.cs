@@ -16,7 +16,7 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Themes()
         {
-            List<ThemeModel> themeModels = _context.Theme.ToList();
+            List<ThemeModel> themeModels = _context.Theme.OrderBy(t => t.OrderNumber).ToList();
             return View(themeModels);
         }
 
@@ -92,5 +92,30 @@ namespace AlgoLibrary.Controllers
 
             return RedirectToAction("Themes");
         }
+
+        [HttpPost]
+        public IActionResult SaveOrder(List<int> themeIds)
+        {
+            try
+            {
+
+                List<ThemeModel> sortedThemes = themeIds
+                    .Select(id => _context.Theme.FirstOrDefault(theme => theme.ThemeId == id))
+                    .Where(theme => theme != null)
+                    .ToList();
+
+                for (int i = 0; i < sortedThemes.Count; i++)
+                {
+                    sortedThemes[i].OrderNumber = i + 1;
+                }
+                _context.SaveChanges();
+                return Ok("Порядок сохранен успешно!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка сохранения порядка: " + ex.Message);
+            }
+        }
+
     }
 }
