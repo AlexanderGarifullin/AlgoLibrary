@@ -1,12 +1,73 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AlgoLibrary.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlgoLibrary.Controllers
 {
     public class ThemeController : Controller
     {
+        private readonly AppDbContext _context;
+        public ThemeController(AppDbContext context)
+        {
+            _context = context;
+
+        }
         public IActionResult Themes()
         {
-            return View();
+            List<ThemeModel> themeModels = _context.Theme.ToList();
+            return View(themeModels);
+        }
+
+        public IActionResult Create()
+        {      
+            var model = new ThemeModel();
+            return View("ThemeChange", model); 
+        }
+
+        public IActionResult Edit(int id)
+        {
+            var model = _context.Theme.Find(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View("ThemeChange", model);
+        }
+
+        [HttpPost]
+        public IActionResult ThemeChange(ThemeModel themeModel)
+        {
+            int id = themeModel.ThemeId;
+            string name = themeModel.Name;
+            int orderNumber = themeModel.OrderNumber;
+            if (id == 0)
+            {
+                // add
+                try
+                {
+                    themeModel.OrderNumber = 0;
+                    _context.Theme.Add(themeModel);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Themes));
+                }
+                catch (Exception e)
+                {
+                    return View("ThemeChange", new ThemeModel());
+                }
+            }
+            else
+            {
+                // edit
+                try
+                {
+
+                }
+                catch (Exception e)
+                {
+                    return View("ThemeChange", new ThemeModel());
+                }
+            }
+            return View("ThemeChange", new ThemeModel());
         }
     }
 }

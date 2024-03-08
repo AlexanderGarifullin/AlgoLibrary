@@ -1,3 +1,36 @@
-﻿@{
+﻿@model List<ThemeModel>
+
+@{
     Layout = "_Layout";
 }
+
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <title>Темы</title>
+</head>
+<body>
+    <h1>Темы конспектов</h1>
+    <a asp-action="Create" class="btn btn-primary">Добавить тему</a>
+    <table class="table">
+        <thead>
+            <tr> 
+                <th>Тема конспекта</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                            <tr>
+                                <td>@user.Name</td>
+                                <td>  
+                                    <a asp-action="Edit" asp-route-id="@user.ThemeId" class="btn-edit">Изменить</a> |
+                                    <a asp-action="Delete" asp-route-id="@user.ThemeId" class="btn-delete">Удалить</a>
+                                </td>
+                            </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
