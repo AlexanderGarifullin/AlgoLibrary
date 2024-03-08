@@ -1,0 +1,54 @@
+﻿@model ArticleModel
+
+@{
+    Layout = "_Layout";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/articleChange.css" asp-append-version="true" />
+    <script>
+            var articleModel = @Html.Raw(Json.Serialize(Model));
+            console.log(articleModel);
+            document.addEventListener('DOMContentLoaded', function () {
+                var themeIdInput = document.getElementById('ThemeId');
+                themeIdInput.value = articleModel.themeId;
+                 if (articleModel.name !== null) {
+                      var articleIdInput = document.getElementById('ArticleId');
+                      var textInput = document.getElementById('Text');
+                      var orderNumberInput = document.getElementById('OrderNumber');
+                      var nameInput = document.getElementById('Name');
+                      var header = document.getElementById('typePage');
+                      header.value = "Изменить конспект";
+                      nameInput.value = articleModel.name;
+                      orderNumberInput.value = articleModel.orderNumber;
+                      textInput.value = articleModel.text;
+                      articleIdInput.value = articleModel.articleId;
+                 }
+            });
+    </script>
+    <title>Конспекты</title>
+</head>
+<body>
+    <h1 id="typePage">Добавить конпект</h1>
+    <form id="articleForm" method="post" asp-action="CreateArticle" asp-controller="Article">
+        <input type="hidden" id="ArticleId" name="ArticleId" value="" />
+        <div class="form-group">
+            <label for="Name">Название конспекта:</label>
+            <input type="text" class="form-control" id="Name" name="Name" required>
+        </div>
+        <div class="form-group">
+            <label for="Text">Текст в формате Markdown:</label>
+            <textarea class="form-control" id="Text" name="Text" rows="10" required></textarea>
+        </div>
+         <input type="hidden" id="ThemeId" name="ThemeId" value="" />
+         <input type="hidden" id="OrderNumber" name="OrderNumber" value="" />
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a asp-action="Article" class="btn btn-primary">Отмена</a>
+        </div>
+    </form>
+</body>
+</html>
