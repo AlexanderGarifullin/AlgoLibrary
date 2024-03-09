@@ -80,5 +80,27 @@ namespace AlgoLibrary.Controllers
                 }
             }
         }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var article = _context.Article.Find(id);
+                if (article == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Article.Remove(article);
+                _context.SaveChanges();
+
+                return RedirectToAction("Articles", new { themeId = article.ThemeId });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Произошла ошибка при удалении конспекта: " + ex.Message);
+            }
+        }
+
     }
 }
