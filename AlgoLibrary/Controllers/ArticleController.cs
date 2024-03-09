@@ -1,5 +1,6 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Xml.Linq;
 
 namespace AlgoLibrary.Controllers
 {
@@ -47,15 +48,36 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult CreateArticle(ArticleModel articleModel)
         {
-            try
+            if (articleModel.ArticleId == 0)
             {
-                _context.Article.Add(articleModel);
-                _context.SaveChanges();
-                return RedirectToAction("Articles", new { themeId = articleModel.ThemeId });
-            }
-            catch (Exception ex)
+                try
+                {
+                    _context.Article.Add(articleModel);
+                    _context.SaveChanges();
+                    return RedirectToAction("Articles", new { themeId = articleModel.ThemeId });
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, "Произошла ошибка при сохранении конспекта: " + ex.Message);
+                }
+            } else
             {
-                return StatusCode(500, "Произошла ошибка при сохранении конспекта: " + ex.Message);
+                try
+                {
+                    var existingArticle = _context.Article.FirstOrDefault(u => u.ArticleId == articleModel.ArticleId);
+                    if (existingArticle == null)
+                    {
+                        return NotFound();
+                    }
+                    existingArticle.Text = articleModel.Text;
+                    existingArticle.Name = articleModel.Name;
+                    _context.SaveChanges();
+                    return RedirectToAction("Articles", new { themeId = articleModel.ThemeId });
+                }
+                catch (Exception ex)
+                {
+                    return StatusCode(500, "Произошла ошибка при сохранении конспекта: " + ex.Message);
+                }
             }
         }
     }
