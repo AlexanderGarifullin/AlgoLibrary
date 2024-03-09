@@ -50,3 +50,15 @@ footer {
     margin-top: -15px; /* Устанавливаем отрицательный отступ сверху */
     margin-bottom: -15px;
 }
+
+/* Обновленные стили для ссылок */
+#articlesList a {
+    text-decoration: none;
+    color: #efefef;
+    font-size: 16px;
+    margin-left: 10px; /* Маржин вместо маргина правее */
+}
+
+    #articlesList a:hover {
+        text-decoration: underline;
+    }
