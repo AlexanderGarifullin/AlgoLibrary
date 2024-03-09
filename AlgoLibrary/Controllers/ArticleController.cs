@@ -21,7 +21,10 @@ namespace AlgoLibrary.Controllers
                 return NotFound();
             }
 
-            var articles = _context.Article.Where(a => a.ThemeId == themeId).ToList();
+            var articles = _context.Article
+                .Where(a => a.ThemeId == themeId)
+                .OrderBy(a => a.OrderNumber)
+                .ToList();
 
             ViewData["ThemeName"] = theme.Name;
             ViewData["ThemeId"] = themeId;
@@ -99,6 +102,30 @@ namespace AlgoLibrary.Controllers
             catch (Exception ex)
             {
                 return StatusCode(500, "Произошла ошибка при удалении конспекта: " + ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public IActionResult SaveOrder(List<int> articlesIds)
+        {
+            try
+            {
+
+                List<ArticleModel> sortedArticles = articlesIds
+                    .Select(id => _context.Article.FirstOrDefault(article => article.ArticleId == id))
+                    .Where(article => article != null)
+                    .ToList();
+
+                for (int i = 0; i < sortedArticles.Count; i++)
+                {
+                    sortedArticles[i].OrderNumber = i + 1;
+                }
+                _context.SaveChanges();
+                return Ok("Порядок сохранен успешно!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
         }
 
