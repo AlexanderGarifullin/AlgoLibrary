@@ -10,6 +10,7 @@ namespace AlgoLibrary.Models
         private string text;
         private int themeId;
         private int orderNumber;
+        private ThemeModel themeModel;
 
         [Key]
         public int ArticleId
@@ -36,6 +37,10 @@ namespace AlgoLibrary.Models
         {
             get { return themeId; }
             set { themeId = value; }
+        }
+        public ThemeModel Theme 
+        {   get { return themeModel; }
+            set { themeModel = value; } 
         }
         public int OrderNumber
         {

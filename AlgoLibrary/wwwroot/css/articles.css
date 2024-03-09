@@ -43,3 +43,10 @@ footer {
     transition: background-color 0.3s ease;
     margin-right: 8px;
 }
+
+.articles ol > li > ul {
+    margin-left: 0;
+    padding-left: 20px;
+    margin-top: -15px; /* Устанавливаем отрицательный отступ сверху */
+    margin-bottom: -15px;
+}

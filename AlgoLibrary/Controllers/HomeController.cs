@@ -1,6 +1,7 @@
 ﻿using AlgoLibrary.Models;
 using Markdig;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace AlgoLibrary.Controllers
@@ -16,7 +17,7 @@ namespace AlgoLibrary.Controllers
 
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int articleId = 0)
         {
             string markdownContent = @"# Добро пожаловать в Algomaster!
 
@@ -45,12 +46,24 @@ Algomaster предлагает широкий спектр алгоритмов
 С уважением,
 Команда Algomaster
 ";
-
+            string articleTitle = "Algomaster";
+            if (articleId != 0)
+            {
+                var artical = _context.Article.FirstOrDefault(art => art.ArticleId == articleId);
+                if (artical != null)
+                {
+                    articleTitle = artical.Name;
+                    markdownContent = artical.Text;
+                }
+            }
             string htmlContent = Markdown.ToHtml(markdownContent, new MarkdownPipelineBuilder().UseMathematics().Build());
             ViewBag.MarkdownContent = htmlContent;
-
-            string articleTitle = "Algomaster";
             ViewBag.ArticleTitle = articleTitle;
+
+            // Получить список всех статей вместе с подключенными темами
+            var articlesWithThemes = _context.Article.Include(a => a.Theme).ToList();
+            ViewBag.ArticlesWithThemes = articlesWithThemes;
+
             return View();
         }
 

@@ -1,15 +1,22 @@
-﻿@{
-    Layout = "_Layout";
-}
-
+﻿
 @{
+    Layout = "_Layout";
     string markdownContent = ViewBag.MarkdownContent;
+    string articleTitle = ViewBag.ArticleTitle;
 }
 
 <html>
 <head>
-    <title>Home</title>
-    <link rel="stylesheet" href="~/css/articles.css" asp-append-version="true" />
+    <title>@articleTitle</title>
+    <link rel="stylesheet" href="~/css/articles.css" asp-append-version="true" /> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/prism.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.23.0/themes/prism.min.css" />
+     <script>
+        var articlesWithThemes = @Html.Raw(Json.Serialize(ViewBag.ArticlesWithThemes));
+        window.articlesWithThemes = articlesWithThemes;
+        Prism.highlightAll();
+    </script>
+    <script src="~/js/indexScript.js"></script>  
 </head>
 <body>
     <div class="container">
@@ -20,21 +27,13 @@
             }
             <h2>Содержимое</h2>
              <div class="articles">
-                <ol>
-                    <li>Сортировка
-                        <ol <ol type="a">
-                            <li>Сортировка пузырьком</li>
-                            <li>Сортировка выбором</li>
-                        </ol>
-                    </li>
-                    <li>Бинарный поиск</li>
-                </ol>
+                <ol id="articlesList"></ol>
             </div>
         </div>
         <div class="vertical-line"></div>
         <div class="content">
-            <h2>@ViewBag.ArticleTitle</h2>
-            <article>
+            <h2>@articleTitle</h2>
+            <article id="articleContent">
                 @Html.Raw(markdownContent)
             </article>
              <footer>
