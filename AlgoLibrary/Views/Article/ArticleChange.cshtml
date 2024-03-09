@@ -47,7 +47,9 @@
          <input type="hidden" id="OrderNumber" name="OrderNumber" value="" />
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
-            <a asp-action="Article" class="btn btn-primary">Отмена</a>
+            <form id="cancelForm" method="post" asp-action="Articles" asp-controller="Article">
+                <button type="submit" class="btn btn-primary">Отмена</button>
+            </form>
         </div>
     </form>
 </body>
