@@ -1,5 +1,6 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using static NuGet.Packaging.PackagingConstants;
 
 namespace AlgoLibrary.Controllers
 {
@@ -90,6 +91,30 @@ namespace AlgoLibrary.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Folders");
+        }
+
+        [HttpPost]
+        public IActionResult SaveOrder(List<int> folderIds)
+        {
+            try
+            {
+
+                List<FolderModel> sortedFolders = folderIds
+                    .Select(id => _context.Folder.FirstOrDefault(folder => folder.FolderId == id))
+                    .Where(folder => folder != null)
+                    .ToList();
+
+                for (int i = 0; i < sortedFolders.Count; i++)
+                {
+                    sortedFolders[i].OrderNumber = i + 1;
+                }
+                _context.SaveChanges();
+                return Ok("Порядок сохранен успешно!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка сохранения порядка: " + ex.Message);
+            }
         }
     }
 }

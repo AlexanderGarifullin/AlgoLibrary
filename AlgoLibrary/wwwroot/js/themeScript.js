@@ -44,6 +44,10 @@ function saveOrder() {
             console.log("Порядок сохранен успешно!");
         },
         error: function (xhr, status, error) {
+            var successMessage = document.getElementById("successMessage");
+            successMessage.textContent = "Порядок не сохранен, произошла ошибка!";
+            successMessage.style.display = "block";
+            successMessage.style.color = "#e74c3c"; 
             console.error("Ошибка сохранения порядка: " + error);
         }
     });

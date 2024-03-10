@@ -116,6 +116,5 @@ namespace AlgoLibrary.Controllers
                 return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
         }
-
     }
 }
