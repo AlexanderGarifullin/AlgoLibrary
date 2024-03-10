@@ -60,7 +60,6 @@ Algomaster предлагает широкий спектр алгоритмов
             ViewBag.MarkdownContent = htmlContent;
             ViewBag.ArticleTitle = articleTitle;
 
-            // Получить список всех статей вместе с подключенными темами
             var articlesWithThemes = _context.Article.Include(a => a.Theme).ToList();
             ViewBag.ArticlesWithThemes = articlesWithThemes;
 

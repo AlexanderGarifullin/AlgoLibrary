@@ -1,3 +1,43 @@
-﻿@{
+﻿@model List<FolderModel>
+
+@{
     Layout = "_Layout";
 }
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/themes.css" asp-append-version="true" />
+    <script src="~/js/folderScript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Папки</title>
+</head>
+<body>
+    <h1>Папки плана обучения</h1>
+    <a asp-action="Create" class="btn btn-primary">Добавить папку</a>
+    <button type="button" onclick="saveOrder()" class="btn btn-primary">Сохранить порядок</button>
+    <h2 id="successMessage" style="display: none;">Порядок изменен успешно!</h2>
+    <table id="folderTable" class="table">
+    <thead>
+        <tr> 
+            <th>Папка</th>
+        </tr>
+    </thead>
+    <tbody>
+            @foreach (var theme in Model)
+            {
+                <tr data-theme-id="@theme.FolderId">
+                    <td>@theme.Name</td>
+                    <td>
+                        <button type="button" class="btn-primary" onclick="moveRowUp(this)">↑</button> |
+                        <button type="button"class="btn-primary" onclick="moveRowDown(this)">↓</button> |
+                        <a asp-controller="Article" asp-action="Articles" asp-route-themeId="@theme.FolderId" class="btn-primary">Показать статьи</a> |
+                        <a asp-action="Edit" asp-route-id="@theme.FolderId" class="btn-edit">Изменить</a> |
+                        <a asp-action="Delete" asp-route-id="@theme.FolderId" class="btn-delete">Удалить</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

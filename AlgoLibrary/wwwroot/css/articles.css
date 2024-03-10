@@ -9,7 +9,8 @@
 }
 
 h2 {
-    color: #efefef
+    color: #efefef;
+    text-align: center;
 }
 
 .vertical-line {
@@ -47,18 +48,18 @@ footer {
 .articles ol > li > ul {
     margin-left: 0;
     padding-left: 20px;
-    margin-top: -15px; /* Устанавливаем отрицательный отступ сверху */
+    margin-top: -15px;
     margin-bottom: -15px;
 }
 
-/* Обновленные стили для ссылок */
+
 #articlesList a {
     text-decoration: none;
     color: #efefef;
     font-size: 16px;
-    margin-left: 10px; /* Маржин вместо маргина правее */
+    margin-left: 10px;
 }
 
-    #articlesList a:hover {
+#articlesList a:hover {
         text-decoration: underline;
-    }
+}
