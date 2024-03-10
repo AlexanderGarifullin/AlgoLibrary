@@ -57,7 +57,7 @@
                                 <td>
                                     <button type="button" class="btn-primary" onclick="moveRowUp(this)">↑</button> |
                                     <button type="button"class="btn-primary" onclick="moveRowDown(this)">↓</button> |
-                                     <a asp-action="Delete" asp-route-id="@article.ArticleId" class="btn-delete">Удалить</a>
+                                    <a asp-action="Delete" asp-route-id="@article.ArticleId" asp-route-folderId="@ViewData["FolderId"]" class="btn-delete">Удалить</a>
                                 </td>
                             </tr>
                     }

@@ -88,5 +88,30 @@ namespace AlgoLibrary.Controllers
             }
         }
 
+        public IActionResult Delete(int id, int folderId)
+        {
+            try
+            {
+                var folderArticle = _context.Folder_Article
+                    .FirstOrDefault(fa => fa.ArticleId == id && fa.FolderId == folderId);
+
+                if (folderArticle == null)
+                {
+                    return NotFound(); 
+                }
+
+                _context.Folder_Article.Remove(folderArticle);
+                _context.SaveChanges();
+
+
+                return RedirectToAction("FolderArticle", new { folderId = folderId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка при удалении из базы данных: " + ex.Message);
+            }
+        }
+
+
     }
 }
