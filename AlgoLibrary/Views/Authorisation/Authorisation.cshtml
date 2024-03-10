@@ -1,5 +1,6 @@
 ﻿@{
     Layout = "_Layout";
+    var errorMessage = ViewData["ErrorMessage"] as string;
 }
 
 <html>
@@ -11,6 +12,12 @@
 <body>
     <div class="container form-container">
         <h2>Вход в аккаунт</h2>
+        @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
         <form asp-controller="Authorisation" asp-action="Login" method="post">
             <div class="form-group">
                 <label for="login">Логин:</label>

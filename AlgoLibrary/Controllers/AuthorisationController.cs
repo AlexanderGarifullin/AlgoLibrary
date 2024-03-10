@@ -12,27 +12,30 @@ namespace AlgoLibrary.Controllers
             _context = context;
         }
 
-        public IActionResult Authorisation()
+        public IActionResult Authorisation(string msg)
         {
+            ViewData["ErrorMessage"] = msg;
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(string login, string password)
-        {
-            DeleteSessionParameters();    
+        {  
             var user = _context.User.FirstOrDefault(u => u.Login == login && u.Password == Hashing.EncryptPassword(password));
             if (user != null)
             {
+                DeleteSessionParameters();
+
                 SessionParameters.UserName = user.Login;
                 SessionParameters.UserId = user.UserId;
                 UserRole role = UserRole.User;
                 if (user.Role == "Admin") role = UserRole.Admin;
                 else if (user.Role == "Moderator") role = UserRole.Moderator;
                 SessionParameters.UserRoot = role;
+
                 return RedirectToAction("Index", "Home");
             }
-            return View("Authorisation");
+            return RedirectToAction("Authorisation", new { msg = StringConstant.AuthorisationError });
         }
         private void DeleteSessionParameters()
         {
