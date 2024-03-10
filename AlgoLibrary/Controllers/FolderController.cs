@@ -54,9 +54,15 @@ namespace AlgoLibrary.Controllers
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
+            folderModel.Name = folderModel.Name.Trim();
             int id = folderModel.FolderId;
             string name = folderModel.Name;
             int orderNumber = folderModel.OrderNumber;
+            if (!CheckFolderData(name)) {
+                ViewData["ErrorMessage"] = StringConstant.FolderInputError;
+                if (id == 0) folderModel = new FolderModel();
+                return View("FolderChange", folderModel);
+            }
             if (id == 0)
             {
                 // add
@@ -139,6 +145,12 @@ namespace AlgoLibrary.Controllers
             {
                 return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
+        }
+
+        private bool CheckFolderData(string name)
+        {
+            if (name.Length > 50) return false;
+            return true;
         }
     }
 }

@@ -18,5 +18,8 @@ namespace AlgoLibrary
 
         // Article
         public static string ArticleInputError = "Ошибка: некорректные данные! Максимальная длина названия конспекта 50 символов!";
+
+        // Folder
+        public static string FolderInputError = "Ошибка: некорректные данные! Максимальная длина названия папки 50 символов!";
     }
 }

@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout";
+    var errorMessage = ViewData["ErrorMessage"] as string;
 }
 
 <html>
@@ -28,6 +29,12 @@
 </head>
 <body>
     <h1 id="typePage">Добавить папку</h1>
+     @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
     <form method="post" action="/Folder/FolderChange">
         <input type="hidden" id="folderId" name="folderId" value="" />
         <div class="form-group">
