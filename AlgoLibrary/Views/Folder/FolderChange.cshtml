@@ -1,0 +1,35 @@
+﻿@model FolderModel
+
+@{
+    Layout = "_Layout";
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />
+    <script>
+            var themeModel = @Html.Raw(Json.Serialize(Model));
+            console.log(themeModel);
+            document.addEventListener('DOMContentLoaded', function () {
+            if (themeModel !== null && themeModel.name !== null) {
+
+            }
+        });
+    </script>
+    <title>Папки</title>
+</head>
+<body>
+    <h1 id="typePage">Добавить папку</h1>
+    <form method="post" action="/Folder/FolderChange">
+        <input type="hidden" id="folderId" name="folderId" value="" />
+        <div class="form-group">
+            <label for="name">Название папки:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <input type="hidden" id="orderNumber" name="orderNumber" value="" />
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <a asp-action="Folders" class="btn btn-primary">Отмена</a>
+    </form>
+</body>
+</html>

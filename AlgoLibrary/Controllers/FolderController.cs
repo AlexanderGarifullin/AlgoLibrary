@@ -17,5 +17,53 @@ namespace AlgoLibrary.Controllers
             return View(folderModels);
         }
 
+        public IActionResult Create()
+        {
+            var model = new FolderModel();
+            return View("FolderChange", model);
+        }
+
+
+        [HttpPost]
+        public IActionResult FolderChange(FolderModel folderModel)
+        {
+            int id = folderModel.FolderId;
+            string name = folderModel.Name;
+            int orderNumber = folderModel.OrderNumber;
+            if (id == 0)
+            {
+                // add
+                try
+                {
+                    folderModel.OrderNumber = 0;
+                    _context.Folder.Add(folderModel);
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Folders));
+                }
+                catch (Exception e)
+                {
+                    return View("FolderChange", new FolderModel());
+                }
+            }
+            else
+            {
+                // edit
+                try
+                {
+                    var existingFolder = _context.Folder.FirstOrDefault(u => u.FolderId == id);
+                    if (existingFolder == null)
+                    {
+                        return NotFound();
+                    }
+                    existingFolder.Name = name;
+                    _context.SaveChanges();
+                    return RedirectToAction(nameof(Folders));
+                }
+                catch (Exception e)
+                {
+                    return View("FolderChange", new FolderModel());
+                }
+            }
+        }
     }
 }
