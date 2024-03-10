@@ -1,5 +1,6 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Plugins;
 using System.Data;
@@ -62,6 +63,19 @@ namespace AlgoLibrary.Controllers
             int id = themeModel.ThemeId;
             string name = themeModel.Name;
             int orderNumber = themeModel.OrderNumber;
+
+            if (!CheckThemeData(name)) 
+            {
+                ViewData["ErrorMessage"] = StringConstant.ThemeInputError;
+                if (id == 0)
+                {
+                    return View("ThemeChange", new ThemeModel());
+                } else
+                {
+                    return View("ThemeChange", themeModel);
+                }
+            }
+
             if (id == 0)
             {
                 // add
@@ -143,6 +157,12 @@ namespace AlgoLibrary.Controllers
             {
                 return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
+        }
+
+        private bool CheckThemeData(string name)
+        {
+            if (name.Length > 50) return false;
+            return true;
         }
     }
 }

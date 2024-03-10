@@ -13,5 +13,8 @@ namespace AlgoLibrary
         // Authorisation
         public static string AuthorisationError = "Ошибка: неверный логин или пароль!";
 
+        //Theme
+        public static string ThemeInputError = "Ошибка: некорректные данные! Максимальная длина темы 50 символов!";
+
     }
 }
