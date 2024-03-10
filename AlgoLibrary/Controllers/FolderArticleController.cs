@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AlgoLibrary.Models;
+using Microsoft.AspNetCore.Mvc;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace AlgoLibrary.Controllers
@@ -6,7 +7,7 @@ namespace AlgoLibrary.Controllers
     public class FolderArticleController : Controller
     {
         private readonly AppDbContext _context;
-        private int currentFolderId = 0;
+
         public FolderArticleController(AppDbContext context)
         {
             _context = context;
@@ -34,9 +35,34 @@ namespace AlgoLibrary.Controllers
             ViewData["AvailableArticles"] = allArticles;
             ViewData["AddedArticles"] = articlesInFolder;
             ViewData["FolderName"] = folder.Name;
-            currentFolderId = folderId;
-
+            ViewData["FolderId"] = folderId;
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult SaveOrder(List<int> articlesIds, int currentFolderId)
+        {
+            try
+            {
+
+                var folderArticles = _context.Folder_Article
+                .Where(fa => fa.FolderId == currentFolderId && articlesIds.Contains(fa.ArticleId))
+                .ToList();
+
+                folderArticles.Sort((a, b) => articlesIds.IndexOf(a.ArticleId).CompareTo(articlesIds.IndexOf(b.ArticleId)));
+
+
+                for (int i = 0; i < folderArticles.Count; i++)
+                {
+                    folderArticles[i].OrderNumber = i + 1;
+                }
+                _context.SaveChanges();
+                return Ok("Порядок сохранен успешно!");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка сохранения порядка: " + ex.Message);
+            }
         }
     }
 }
