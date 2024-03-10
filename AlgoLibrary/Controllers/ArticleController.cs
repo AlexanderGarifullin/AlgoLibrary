@@ -15,6 +15,10 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Articles(int themeId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var theme = _context.Theme.FirstOrDefault(t => t.ThemeId == themeId);
             if (theme == null)
             {
@@ -33,6 +37,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Create(int themeId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = new ArticleModel();
             model.ThemeId = themeId;
             return View("ArticleChange", model);
@@ -40,6 +48,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Edit(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = _context.Article.Find(id);
             if (model == null)
             {
@@ -51,6 +63,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult CreateArticle(ArticleModel articleModel)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             if (articleModel.ArticleId == 0)
             {
                 try
@@ -86,6 +102,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
                 var article = _context.Article.Find(id);
@@ -108,6 +128,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> articlesIds)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
 

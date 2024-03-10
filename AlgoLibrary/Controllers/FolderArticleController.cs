@@ -15,6 +15,10 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult FolderArticle(int folderId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var folder = _context.Folder.FirstOrDefault(t => t.FolderId == folderId);
             if (folder == null)
             {
@@ -42,6 +46,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> articlesIds, int currentFolderId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
 
@@ -67,6 +75,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Add(int id, int folderId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
                 var folderArticle = new Folder_ArticleModel
@@ -90,6 +102,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id, int folderId)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
                 var folderArticle = _context.Folder_Article

@@ -11,8 +11,6 @@
         groupedArticles[level].push(folderArticle.article);
     });
 
-    console.log(groupedArticles);
-
     var container = document.getElementById("articlesList");
     Object.keys(groupedArticles).forEach(function (level) {
         var articles = groupedArticles[level];

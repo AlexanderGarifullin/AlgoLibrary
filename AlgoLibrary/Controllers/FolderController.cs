@@ -14,18 +14,30 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Folders()
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             List<FolderModel> folderModels = _context.Folder.OrderBy(t => t.OrderNumber).ToList();
             return View(folderModels);
         }
 
         public IActionResult Create()
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = new FolderModel();
             return View("FolderChange", model);
         }
 
         public IActionResult Edit(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = _context.Folder.Find(id);
             if (model == null)
             {
@@ -38,6 +50,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult FolderChange(FolderModel folderModel)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             int id = folderModel.FolderId;
             string name = folderModel.Name;
             int orderNumber = folderModel.OrderNumber;
@@ -80,6 +96,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var folderToDelete = _context.Folder.Find(id);
 
             if (folderToDelete == null)
@@ -96,6 +116,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> folderIds)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
 

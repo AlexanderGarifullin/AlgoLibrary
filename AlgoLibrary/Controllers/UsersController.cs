@@ -15,13 +15,19 @@ namespace AlgoLibrary.Controllers
         {
             if (SessionParameters.UserRoot != UserRole.Admin)
             {
-                return View("Rights");
+                return View("~/Views/Users/Rights.cshtml");
             }
+
+
             List<UserModel> users = _context.User.ToList();
             return View(users);
         }
         public IActionResult Delete(int id)
         {
+            if (SessionParameters.UserRoot != UserRole.Admin)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             if (id == SessionParameters.UserId) return RedirectToAction("Users");
             var userToDelete = _context.User.Find(id);
 
@@ -38,10 +44,18 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Create()
         {
+            if (SessionParameters.UserRoot != UserRole.Admin)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             return View("Change", new UserModel());
         }
         public IActionResult Edit(int id)
         {
+            if (SessionParameters.UserRoot != UserRole.Admin)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             UserModel user = _context.User.FirstOrDefault(u => u.UserId == id);
             if (user == null)
             {
@@ -53,6 +67,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult Create(UserModel userModel)
         {
+            if (SessionParameters.UserRoot != UserRole.Admin)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             int id = userModel.UserId;
             string login = userModel.Login;
             string password = userModel.Password;

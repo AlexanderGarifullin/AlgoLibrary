@@ -14,20 +14,36 @@ namespace AlgoLibrary.Controllers
             _context = context;
 
         }
+
+
         public IActionResult Themes()
         {
+
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
+
             List<ThemeModel> themeModels = _context.Theme.OrderBy(t => t.OrderNumber).ToList();
             return View(themeModels);
         }
 
         public IActionResult Create()
-        {      
+        {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = new ThemeModel();
             return View("ThemeChange", model); 
         }
 
         public IActionResult Edit(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var model = _context.Theme.Find(id);
             if (model == null)
             {
@@ -39,6 +55,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult ThemeChange(ThemeModel themeModel)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             int id = themeModel.ThemeId;
             string name = themeModel.Name;
             int orderNumber = themeModel.OrderNumber;
@@ -80,6 +100,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             var themeToDelete = _context.Theme.Find(id);
 
             if (themeToDelete == null)
@@ -96,6 +120,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> themeIds)
         {
+            if (SessionParameters.UserRoot == UserRole.User)
+            {
+                return View("~/Views/Users/Rights.cshtml");
+            }
             try
             {
 
