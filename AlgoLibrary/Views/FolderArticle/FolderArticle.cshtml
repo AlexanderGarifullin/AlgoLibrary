@@ -28,7 +28,7 @@
                             <tr data-article-id="@article.ArticleId">
                                 <td>@article.Name</td>
                                 <td>
-                                    <a asp-action="Add" asp-route-id="@article.ArticleId" class="btn-delete">Добавить</a>
+                                    <a asp-action="Add" asp-route-id="@article.ArticleId" asp-route-folderId="@ViewData["FolderId"]" class="btn-delete">Добавить</a>
                                 </td>
                             </tr>
                     }

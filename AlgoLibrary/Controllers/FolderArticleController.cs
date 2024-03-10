@@ -64,5 +64,29 @@ namespace AlgoLibrary.Controllers
                 return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
         }
+
+        public IActionResult Add(int id, int folderId)
+        {
+            try
+            {
+                var folderArticle = new Folder_ArticleModel
+                {
+                    FolderId = folderId,
+                    ArticleId = id,
+                    OrderNumber = 0
+                };
+
+                _context.Folder_Article.Add(folderArticle);
+                _context.SaveChanges();
+
+
+                return RedirectToAction("FolderArticle", new { folderId = folderId });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest("Ошибка при добавлении в базу данных: " + ex.Message);
+            }
+        }
+
     }
 }
