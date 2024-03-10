@@ -9,11 +9,18 @@
     <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />
     <script>
-            var themeModel = @Html.Raw(Json.Serialize(Model));
-            console.log(themeModel);
+            var folderModel = @Html.Raw(Json.Serialize(Model));
+            console.log(folderModel);
             document.addEventListener('DOMContentLoaded', function () {
-            if (themeModel !== null && themeModel.name !== null) {
-
+            if (folderModel !== null && folderModel.name !== null) {
+                var folderIdInput = document.getElementById('folderId');
+                var nameInput = document.getElementById('name');
+                var orderNumberInput = document.getElementById('orderNumber');
+                var header = document.getElementById('typePage');
+                header.textContent = "Изменить название папки";
+                folderIdInput.value = folderModel.folderId;
+                nameInput.value = folderModel.name;
+                orderNumberInput.value = folderModel.orderNumber;
             }
         });
     </script>

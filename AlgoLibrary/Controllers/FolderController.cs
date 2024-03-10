@@ -23,6 +23,16 @@ namespace AlgoLibrary.Controllers
             return View("FolderChange", model);
         }
 
+        public IActionResult Edit(int id)
+        {
+            var model = _context.Folder.Find(id);
+            if (model == null)
+            {
+                return NotFound();
+            }
+            return View("FolderChange", model);
+        }
+
 
         [HttpPost]
         public IActionResult FolderChange(FolderModel folderModel)
