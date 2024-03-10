@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout";
+    var errorMessage = ViewData["ErrorMessage"] as string;
 }
 
 <html>
@@ -33,6 +34,12 @@
 </head>
 <body>
     <h1 id="typePage">Добавить конпект</h1>
+    @if (!string.IsNullOrEmpty(errorMessage))
+        {
+            <div class="alert alert-danger" role="alert">
+                @errorMessage
+            </div>
+        }
     <form id="articleForm" method="post" asp-action="CreateArticle" asp-controller="Article">
         <input type="hidden" id="ArticleId" name="ArticleId" value="" />
         <div class="form-group">

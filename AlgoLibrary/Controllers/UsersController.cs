@@ -74,10 +74,14 @@ namespace AlgoLibrary.Controllers
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
+            userModel.Password = userModel.Password.Trim();
+            userModel.Login = userModel.Login.Trim();
+
             int id = userModel.UserId;
-            string login = userModel.Login.Trim();
-            string password = userModel.Password.Trim();
+            string login = userModel.Login;
+            string password = userModel.Password;
             string role = userModel.Role;
+
             if (!IsCorrectUserData(id, login, password, role))
             {
                 ViewData["ErrorMessage"] = StringConstant.UsersInputError;

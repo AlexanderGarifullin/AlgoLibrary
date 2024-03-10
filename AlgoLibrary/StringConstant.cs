@@ -16,5 +16,7 @@ namespace AlgoLibrary
         //Theme
         public static string ThemeInputError = "Ошибка: некорректные данные! Максимальная длина темы 50 символов!";
 
+        // Article
+        public static string ArticleInputError = "Ошибка: некорректные данные! Максимальная длина названия конспекта 50 символов!";
     }
 }

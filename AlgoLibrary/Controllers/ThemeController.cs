@@ -60,6 +60,8 @@ namespace AlgoLibrary.Controllers
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
+            themeModel.Name = themeModel.Name.Trim();
+
             int id = themeModel.ThemeId;
             string name = themeModel.Name;
             int orderNumber = themeModel.OrderNumber;

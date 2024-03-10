@@ -67,6 +67,13 @@ namespace AlgoLibrary.Controllers
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
+            articleModel.Name = articleModel.Name.Trim();
+
+            if (!CheckArticleData(articleModel.Name))
+            {
+                ViewData["ErrorMessage"] = StringConstant.ArticleInputError;
+                return View("ArticleChange", articleModel);
+            }
             if (articleModel.ArticleId == 0)
             {
                 try
@@ -151,6 +158,13 @@ namespace AlgoLibrary.Controllers
             {
                 return BadRequest("Ошибка сохранения порядка: " + ex.Message);
             }
+        }
+
+
+        private bool CheckArticleData(string name)
+        {
+            if (name.Length > 50) return false;
+            return true;
         }
 
     }
