@@ -75,5 +75,21 @@ namespace AlgoLibrary.Controllers
                 }
             }
         }
+
+
+        public IActionResult Delete(int id)
+        {
+            var folderToDelete = _context.Folder.Find(id);
+
+            if (folderToDelete == null)
+            {
+                return NotFound();
+            }
+
+            _context.Folder.Remove(folderToDelete);
+            _context.SaveChanges();
+
+            return RedirectToAction("Folders");
+        }
     }
 }
