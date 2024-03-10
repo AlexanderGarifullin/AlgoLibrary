@@ -29,8 +29,13 @@ namespace AlgoLibrary.Controllers
             ViewBag.MarkdownContent = htmlContent;
             ViewBag.ArticleTitle = articleTitle;
 
-            var articlesWithThemes = _context.Article.Include(a => a.Theme).ToList();
-            ViewBag.ArticlesWithThemes = articlesWithThemes;
+            var folderArticles = _context.Folder_Article
+        .Include(fa => fa.Folder)
+        .Include(fa => fa.Article)
+        .OrderBy(fa => fa.Folder.OrderNumber)
+        .ThenBy(fa => fa.OrderNumber)
+        .ToList();
+            ViewBag.FolderArticles = folderArticles;
             return View();
         }
     }
