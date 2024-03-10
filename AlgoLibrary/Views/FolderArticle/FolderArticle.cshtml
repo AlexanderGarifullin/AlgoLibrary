@@ -1,0 +1,68 @@
+﻿@{
+    Layout = "_Layout";
+    var availableArticles = ViewData["AvailableArticles"] as List<ArticleModel>;
+    var addedArticles = ViewData["AddedArticles"] as List<ArticleModel>;
+    var folderName = ViewData["FolderName"] as string;
+}
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/folderArticle.css" asp-append-version="true" />
+    <script src="~/js/folderArticleScript.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Конспекты из папки</title>
+</head>
+<body>
+    <div class="container">
+        <div>
+            <table id="availableArticlesTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Доступные конспекты</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in availableArticles)
+                    {
+                            <tr data-article-id="@article.ArticleId">
+                                <td>@article.Name</td>
+                                <td>
+                                    <a asp-action="Add" asp-route-id="@article.ArticleId" class="btn-delete">Добавить</a>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+             <div>
+                <h1>Конспекты из папки "@folderName"</h1>
+                <button type="button" onclick="saveOrder()" class="btn btn-primary">Сохранить порядок</button>
+                <h2 id="successMessage" style="display: none;">Порядок изменен успешно!</h2>
+            </div>
+            <table id="addedArticlesTable" class="table">
+                <thead>
+                    <tr>
+                        <th>Добавленные конспекты</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in addedArticles)
+                    {
+                            <tr data-article-id="@article.ArticleId">
+                                <td>@article.Name</td>
+                                <td>
+                                    <button type="button" class="btn-primary" onclick="moveRowUp(this)">↑</button> |
+                                    <button type="button"class="btn-primary" onclick="moveRowDown(this)">↓</button> |
+                                     <a asp-action="Delete" asp-route-id="@article.ArticleId" class="btn-delete">Удалить</a>
+                                </td>
+                            </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
