@@ -2,12 +2,13 @@
 
 @{
     Layout = "_Layout";
+    var errorMessage = ViewData["ErrorMessage"] as string;
 }
 
 <html>
 <head>
     <link rel="stylesheet" href="~/css/users.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/change.css" asp-append-version="true" />    
     <script>
             var userModel = @Html.Raw(Json.Serialize(Model));
              console.log(userModel);
@@ -32,6 +33,12 @@
 </head>
 <body>
     <h1 id="typePage">Добавить пользователя</h1>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
     <form method="post" action="/Users/Create">
         <input type="hidden" id="userId" name="userId" value="" />
         <div class="form-group">

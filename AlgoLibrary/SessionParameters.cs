@@ -4,6 +4,6 @@
     {
         public static int UserId = -1;
         public static string UserName = "";
-        public static UserRole UserRoot = UserRole.User;
+        public static UserRole UserRoot = UserRole.Admin;
     }
 }

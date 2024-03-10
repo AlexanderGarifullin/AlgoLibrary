@@ -12,49 +12,61 @@ namespace AlgoLibrary
 
         public static string EncryptPassword(string password)
         {
-            using (Aes aesAlg = Aes.Create())
+            try
             {
-                aesAlg.Key = key;
-                aesAlg.Mode = CipherMode.ECB;
-
-                ICryptoTransform encryptor = aesAlg.CreateEncryptor();
-
-                using (MemoryStream msEncrypt = new MemoryStream())
+                using (Aes aesAlg = Aes.Create())
                 {
-                    using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
+                    aesAlg.Key = key;
+                    aesAlg.Mode = CipherMode.ECB;
+
+                    ICryptoTransform encryptor = aesAlg.CreateEncryptor();
+
+                    using (MemoryStream msEncrypt = new MemoryStream())
                     {
-                        using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                        using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            swEncrypt.Write(password);
+                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                            {
+                                swEncrypt.Write(password);
+                            }
                         }
+                        return Convert.ToBase64String(msEncrypt.ToArray());
                     }
-                    return Convert.ToBase64String(msEncrypt.ToArray());
                 }
+            } catch (Exception ex)
+            {
+                return "";
             }
         }
 
         public static string DecryptPassword(string encryptedPassword)
         {
-            if (encryptedPassword == null) return "";
-            byte[] cipherText = Convert.FromBase64String(encryptedPassword);
-
-            using (Aes aesAlg = Aes.Create())
+            try
             {
-                aesAlg.Key = key;
-                aesAlg.Mode = CipherMode.ECB;
+                if (encryptedPassword == null) return "";
+                byte[] cipherText = Convert.FromBase64String(encryptedPassword);
 
-                ICryptoTransform decryptor = aesAlg.CreateDecryptor();
-
-                using (MemoryStream msDecrypt = new MemoryStream(cipherText))
+                using (Aes aesAlg = Aes.Create())
                 {
-                    using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
+                    aesAlg.Key = key;
+                    aesAlg.Mode = CipherMode.ECB;
+
+                    ICryptoTransform decryptor = aesAlg.CreateDecryptor();
+
+                    using (MemoryStream msDecrypt = new MemoryStream(cipherText))
                     {
-                        using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                        using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
-                            return srDecrypt.ReadToEnd();
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                return srDecrypt.ReadToEnd();
+                            }
                         }
                     }
                 }
+            } catch (Exception ex)
+            {
+                return "";
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlgoLibrary.Models;
+using Humanizer.Localisation;
 
 namespace AlgoLibrary.Controllers
 {
@@ -11,14 +12,13 @@ namespace AlgoLibrary.Controllers
             _context = context;
         }
 
-        public IActionResult Users()
+        public IActionResult Users(string msg)
         {
             if (SessionParameters.UserRoot != UserRole.Admin)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
-
-
+            ViewData["ErrorMessage"] = msg;
             List<UserModel> users = _context.User.ToList();
             return View(users);
         }
@@ -28,7 +28,10 @@ namespace AlgoLibrary.Controllers
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
-            if (id == SessionParameters.UserId) return RedirectToAction("Users");
+            if (id == SessionParameters.UserId)  
+            {
+                return RedirectToAction("Users", new { msg = StringConstant.DeleteHimselfError});
+            }
             var userToDelete = _context.User.Find(id);
 
             if (userToDelete == null)
@@ -72,10 +75,18 @@ namespace AlgoLibrary.Controllers
                 return View("~/Views/Users/Rights.cshtml");
             }
             int id = userModel.UserId;
-            string login = userModel.Login;
-            string password = userModel.Password;
+            string login = userModel.Login.Trim();
+            string password = userModel.Password.Trim();
             string role = userModel.Role;
-            if (!IsCorrectUserData(id, login, password, role)) return View("Change", new UserModel());
+            if (!IsCorrectUserData(id, login, password, role))
+            {
+                ViewData["ErrorMessage"] = StringConstant.UsersInputError;
+                if (id == 0) return View("Change", new UserModel()); 
+                else
+                {
+                    return View("Change", userModel);
+                }
+            }
             if (id == 0)
             {
                 // add
@@ -88,6 +99,7 @@ namespace AlgoLibrary.Controllers
                 }
                 catch (Exception e)
                 {
+                    ViewData["ErrorMessage"] = StringConstant.DbError;
                     return View("Change", new UserModel());
                 }              
             } else
@@ -109,6 +121,7 @@ namespace AlgoLibrary.Controllers
                 }
                 catch (Exception e)
                 {
+                    ViewData["ErrorMessage"] = StringConstant.DbError;
                     return View("Change", new UserModel());
                 }
             }

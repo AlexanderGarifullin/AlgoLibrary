@@ -2,6 +2,7 @@
 
 @{
     Layout = "_Layout";
+    var errorMessage = ViewData["ErrorMessage"] as string;
 }
 
 <html>
@@ -11,6 +12,12 @@
 </head>
 <body>
     <h1>Пользователи</h1>
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+            <div class="alert alert-danger" role="alert">
+            @errorMessage
+            </div>
+    }
     <a asp-action="Create" class="btn btn-primary">Добавить пользователя</a>
     <table class="table">
         <thead>
