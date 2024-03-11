@@ -12,17 +12,18 @@
     <link rel="stylesheet" href="~/css/articleChange.css" asp-append-version="true" />
     <script>
             var articleModel = @Html.Raw(Json.Serialize(Model));
-            console.log(articleModel);
             document.addEventListener('DOMContentLoaded', function () {
                 var themeIdInput = document.getElementById('ThemeId');
                 themeIdInput.value = articleModel.themeId;
-                 if (articleModel.name !== null) {
+                var themeIdHiddenInput = document.getElementById('ThemeIdHidden');
+                themeIdHiddenInput.value = articleModel.themeId;
+                 if (articleModel.articleId != 0 && articleModel.name !== null) {
                       var articleIdInput = document.getElementById('ArticleId');
                       var textInput = document.getElementById('Text');
                       var orderNumberInput = document.getElementById('OrderNumber');
                       var nameInput = document.getElementById('Name');
                       var header = document.getElementById('typePage');
-                      header.value = "Изменить конспект";
+                      header.textContent  = "Изменить конспект";
                       nameInput.value = articleModel.name;
                       orderNumberInput.value = articleModel.orderNumber;
                       textInput.value = articleModel.text;
@@ -54,10 +55,11 @@
          <input type="hidden" id="OrderNumber" name="OrderNumber" value="" />
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
-            <form id="cancelForm" method="post" asp-action="Articles" asp-controller="Article">
-                <button type="submit" class="btn btn-primary">Отмена</button>
-            </form>
         </div>
+    </form>
+    <form id="cancelForm" method="post" asp-action="Articles" asp-controller="Article">
+        <input type="hidden" id="ThemeIdHidden" name="themeId" value="" />
+        <button type="submit" class="btn btn-primary">Отмена</button>
     </form>
 </body>
 </html>

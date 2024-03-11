@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using AlgoLibrary.Models;
 using Humanizer.Localisation;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 
 namespace AlgoLibrary.Controllers
 {
@@ -101,6 +103,11 @@ namespace AlgoLibrary.Controllers
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Users));
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.UsersDuplicateNameError + "\"" + login + "!";
+                    return View("Change", new UserModel());
+                }
                 catch (Exception e)
                 {
                     ViewData["ErrorMessage"] = StringConstant.DbError;
@@ -122,6 +129,11 @@ namespace AlgoLibrary.Controllers
                     existingUser.Role = role;
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Users));
+                }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.UsersDuplicateNameError + "\"" + login + "!";
+                    return View("Change", userModel);
                 }
                 catch (Exception e)
                 {

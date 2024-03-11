@@ -1,5 +1,7 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using System.Xml.Linq;
 
 namespace AlgoLibrary.Controllers
@@ -82,6 +84,11 @@ namespace AlgoLibrary.Controllers
                     _context.SaveChanges();
                     return RedirectToAction("Articles", new { themeId = articleModel.ThemeId });
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.ArticleDuplicateNameError + "\"" + articleModel.Name + "!";
+                    return View("ArticleChange", articleModel);
+                }
                 catch (Exception ex)
                 {
                     return StatusCode(500, "Произошла ошибка при сохранении конспекта: " + ex.Message);
@@ -99,6 +106,11 @@ namespace AlgoLibrary.Controllers
                     existingArticle.Name = articleModel.Name;
                     _context.SaveChanges();
                     return RedirectToAction("Articles", new { themeId = articleModel.ThemeId });
+                }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.ArticleDuplicateNameError + "\"" + articleModel.Name + "!";
+                    return View("ArticleChange", articleModel);
                 }
                 catch (Exception ex)
                 {

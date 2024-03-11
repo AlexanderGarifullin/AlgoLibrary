@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using NuGet.Protocol.Plugins;
 using System.Data;
 
@@ -88,6 +89,11 @@ namespace AlgoLibrary.Controllers
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Themes));
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.ThemeDuplicateNameError + "\"" + name + "!";
+                    return View("ThemeChange", new ThemeModel());
+                }
                 catch (Exception e)
                 {
                     return View("ThemeChange", new ThemeModel());
@@ -106,6 +112,11 @@ namespace AlgoLibrary.Controllers
                     existingTheme.Name = name;
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Themes));
+                }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.ThemeDuplicateNameError + "\"" + name + "!";
+                    return View("ThemeChange", themeModel);
                 }
                 catch (Exception e)
                 {

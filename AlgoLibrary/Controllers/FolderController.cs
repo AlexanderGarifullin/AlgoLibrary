@@ -1,5 +1,7 @@
 ﻿using AlgoLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MySqlConnector;
 using static NuGet.Packaging.PackagingConstants;
 
 namespace AlgoLibrary.Controllers
@@ -73,6 +75,11 @@ namespace AlgoLibrary.Controllers
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Folders));
                 }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.FolderDuplicateNameError + "\"" + name + "!";
+                    return View("FolderChange", new FolderModel());
+                }
                 catch (Exception e)
                 {
                     return View("FolderChange", new FolderModel());
@@ -91,6 +98,11 @@ namespace AlgoLibrary.Controllers
                     existingFolder.Name = name;
                     _context.SaveChanges();
                     return RedirectToAction(nameof(Folders));
+                }
+                catch (DbUpdateException ex) when (ex.InnerException is MySqlException mysqlEx && mysqlEx.Number == 1062)
+                {
+                    ViewData["ErrorMessage"] = StringConstant.FolderDuplicateNameError + "\"" + name + "!";
+                    return View("FolderChange", folderModel);
                 }
                 catch (Exception e)
                 {
