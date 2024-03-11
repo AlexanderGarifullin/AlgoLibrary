@@ -46,3 +46,7 @@ body {
 .container {
     color: #efefef;
 }
+
+a {
+    color: lightblue;
+}
