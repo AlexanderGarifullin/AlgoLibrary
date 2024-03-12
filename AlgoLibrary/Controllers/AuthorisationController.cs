@@ -26,12 +26,13 @@ namespace AlgoLibrary.Controllers
             {
                 DeleteSessionParameters();
 
-                SessionParameters.UserName = user.Login;
-                SessionParameters.UserId = user.UserId;
                 UserRole role = UserRole.User;
                 if (user.Role == "Admin") role = UserRole.Admin;
                 else if (user.Role == "Moderator") role = UserRole.Moderator;
-                SessionParameters.UserRoot = role;
+
+                HttpContext.Session.SetString("UserName", user.Login);
+                HttpContext.Session.SetInt32("UserId", user.UserId);
+                HttpContext.Session.SetString("UserRole", role.ToString());
 
                 return RedirectToAction("Index", "Home");
             }
@@ -39,10 +40,9 @@ namespace AlgoLibrary.Controllers
         }
         private void DeleteSessionParameters()
         {
-            SessionParameters.UserName = "";
-            SessionParameters.UserId = -1;
-            SessionParameters.UserRoot = UserRole.User;
-
+            HttpContext.Session.SetString("UserName", "");
+            HttpContext.Session.SetInt32("UserId", -1);
+            HttpContext.Session.SetString("UserRole", UserRole.User.ToString());
         }
 
         [HttpPost]

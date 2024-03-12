@@ -8,6 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnection"), new MySqlServerVersion(new Version(8, 0, 26))));
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+});
+
+builder.Services.AddHttpContextAccessor();
 
 
 var app = builder.Build();
@@ -22,6 +28,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseSession();
+app.Use((context, next) =>
+{
+    if (context.Session.GetString("UserRole") == null)
+    {
+        context.Session.SetString("UserRole", UserRole.User.ToString());
+        context.Session.SetInt32("UserId", -1);
+        context.Session.SetString("UserName", "");
+    }
+    return next();
+});
 
 app.UseRouting();
 

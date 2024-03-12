@@ -5,12 +5,6 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/errorMsg.css" asp-append-version="true" />
     <script src="~/js/mathjax-scripts.js"></script>
-     <script>
-        window.onload = function() {
-            var usernameElement = document.getElementById("username");
-            usernameElement.textContent = '@AlgoLibrary.SessionParameters.UserName';
-        };
-    </script>
 </head>
 <body>
     <menu id="menu">
@@ -19,7 +13,7 @@
              <a href="~/Home/Index">Конспекты</a>
         </div>
         <div class="right">
-            <a id="username"></a>
+           <a id="username">@Context.Session.GetString("UserName")</a>
             <a href="~/Users/Users">Пользователи</a>
             <a href="~/Authorisation/Authorisation">Вход</a>
         </div>

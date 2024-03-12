@@ -21,7 +21,10 @@ namespace AlgoLibrary.Controllers
         public IActionResult Themes()
         {
 
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -32,7 +35,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Create()
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -42,7 +48,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Edit(int id)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -57,7 +66,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult ThemeChange(ThemeModel themeModel)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -127,7 +139,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -147,7 +162,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> themeIds)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }

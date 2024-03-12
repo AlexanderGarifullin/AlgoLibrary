@@ -16,7 +16,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Users(string msg)
         {
-            if (SessionParameters.UserRoot != UserRole.Admin)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -26,11 +29,14 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Delete(int id)
         {
-            if (SessionParameters.UserRoot != UserRole.Admin)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
-            if (id == SessionParameters.UserId)  
+            if (id == HttpContext.Session.GetInt32("UserId"))  
             {
                 return RedirectToAction("Users", new { msg = StringConstant.DeleteHimselfError});
             }
@@ -49,7 +55,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Create()
         {
-            if (SessionParameters.UserRoot != UserRole.Admin)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -57,7 +66,10 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult Edit(int id)
         {
-            if (SessionParameters.UserRoot != UserRole.Admin)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -72,7 +84,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult Create(UserModel userModel)
         {
-            if (SessionParameters.UserRoot != UserRole.Admin)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -118,7 +133,7 @@ namespace AlgoLibrary.Controllers
                 // edit
                 try
                 {
-                    if (id == SessionParameters.UserId) RedirectToAction(nameof(Users));
+                    if (id == HttpContext.Session.GetInt32("UserId")) RedirectToAction(nameof(Users));
                     var existingUser = _context.User.FirstOrDefault(u => u.UserId == id);
                     if (existingUser == null)
                     {

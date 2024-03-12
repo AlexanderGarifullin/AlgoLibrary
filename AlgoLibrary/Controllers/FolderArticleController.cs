@@ -15,7 +15,10 @@ namespace AlgoLibrary.Controllers
         }
         public IActionResult FolderArticle(int folderId)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -46,7 +49,10 @@ namespace AlgoLibrary.Controllers
         [HttpPost]
         public IActionResult SaveOrder(List<int> articlesIds, int currentFolderId)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -75,7 +81,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Add(int id, int folderId)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+            string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }
@@ -102,7 +111,10 @@ namespace AlgoLibrary.Controllers
 
         public IActionResult Delete(int id, int folderId)
         {
-            if (SessionParameters.UserRoot == UserRole.User)
+           string userRoleString = HttpContext.Session.GetString("UserRole");
+            UserRole userRole = Enum.Parse<UserRole>(userRoleString);
+
+            if (userRole == UserRole.User)
             {
                 return View("~/Views/Users/Rights.cshtml");
             }

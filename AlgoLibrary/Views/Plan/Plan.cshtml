@@ -20,7 +20,7 @@
 <body>
     <div class="container">
         <div class="contents">
-            @if (SessionParameters.UserRoot != UserRole.User)
+           @if (Context.Session.GetString("UserRole") != UserRole.User.ToString())
             {
                <a href="~/Folder/Folders" class="btn btn-primary">Изменить</a>
             }

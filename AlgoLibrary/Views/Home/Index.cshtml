@@ -21,9 +21,9 @@
 <body>
     <div class="container">
         <div class="contents">
-            @if (SessionParameters.UserRoot != UserRole.User)
+            @if (Context.Session.GetString("UserRole") != UserRole.User.ToString())
             {
-               <a href="~/Theme/Themes" class="btn btn-primary">Изменить</a>
+             <a href="~/Theme/Themes" class="btn btn-primary">Изменить</a>
             }
             <h2>Содержимое</h2>
              <div class="articles">
