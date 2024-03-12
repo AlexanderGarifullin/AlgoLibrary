@@ -1,0 +1,10 @@
+﻿.alert-danger {
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+#successMessage {
+    display: none;
+    color: #2ecc71;
+    font-size: 18px;
+}
