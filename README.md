@@ -61,4 +61,4 @@ Contributions to Algolibrary are welcome! If you have suggestions for improvemen
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
+This project is licensed under the [Apache License](LICENSE). Feel free to use, modify, and distribute the code as per the terms of the license.
