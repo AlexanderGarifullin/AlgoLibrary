@@ -63,7 +63,7 @@ Algomaster предлагает широкий спектр алгоритмов
             var articlesWithThemes = _context.Article.Include(a => a.Theme).ToList();
             ViewBag.ArticlesWithThemes = articlesWithThemes;
 
-            return View();
+            return View("Index");
         }
 
         public IActionResult Privacy()
