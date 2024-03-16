@@ -44,6 +44,9 @@ Here are some screenshots of Algolibrary in action:
 - **Frontend**: Pure CSS and JavaScript are used for styling and client-side interactions, ensuring a smooth and responsive user experience.
 - **Markdown Processing**: Markdig library is employed for processing Markdown content, enabling seamless conversion to HTML for display.
 
+## Testing
+The application underwent thorough unit testing using the xUnit framework to ensure the reliability and correctness of its components. Each critical functionality, including algorithm summaries retrieval, user authentication, and database interactions, was rigorously tested to maintain code integrity and stability.
+
 ## Roles and Permissions
 
 - **User**: Can view algorithm summaries and practice exercises.
