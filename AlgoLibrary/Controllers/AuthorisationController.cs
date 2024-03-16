@@ -15,7 +15,7 @@ namespace AlgoLibrary.Controllers
         public IActionResult Authorisation(string msg)
         {
             ViewData["ErrorMessage"] = msg;
-            return View();
+            return View("Authorisation");
         }
 
         [HttpPost]
@@ -38,7 +38,7 @@ namespace AlgoLibrary.Controllers
             }
             return RedirectToAction("Authorisation", new { msg = StringConstant.AuthorisationError });
         }
-        private void DeleteSessionParameters()
+        public void DeleteSessionParameters()
         {
             HttpContext.Session.SetString("UserName", "");
             HttpContext.Session.SetInt32("UserId", -1);
