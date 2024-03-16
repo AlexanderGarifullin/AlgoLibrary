@@ -18,9 +18,6 @@ namespace AlgoLibrary.Tests.Controllers
 
             using (var context = new AppDbContext(options))
             {
-                // Здесь добавьте код для заполнения базы данных тестовыми данными,
-                // если это необходимо для вашего теста.
-
                 var controller = new HomeController(context);
 
                 // Act
