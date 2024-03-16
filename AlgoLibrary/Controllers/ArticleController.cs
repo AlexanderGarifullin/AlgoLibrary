@@ -186,7 +186,7 @@ namespace AlgoLibrary.Controllers
         }
 
 
-        private bool CheckArticleData(string name)
+        public bool CheckArticleData(string name)
         {
             if (name.Length > 50) return false;
             return true;

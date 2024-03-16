@@ -177,7 +177,7 @@ namespace AlgoLibrary.Controllers
             }
         }
 
-        private bool CheckFolderData(string name)
+        public bool CheckFolderData(string name)
         {
             if (name.Length > 50) return false;
             return true;

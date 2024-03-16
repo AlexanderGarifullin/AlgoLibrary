@@ -190,7 +190,7 @@ namespace AlgoLibrary.Controllers
             }
         }
 
-        private bool CheckThemeData(string name)
+        public bool CheckThemeData(string name)
         {
             if (name.Length > 50) return false;
             return true;

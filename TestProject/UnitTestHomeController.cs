@@ -231,4 +231,82 @@ namespace AlgoLibrary.Tests.Controllers
             Assert.Equal("Ошибка: неверный логин или пароль!", result.RouteValues["msg"]);
         }
     }
+
+    public class UsersControllerTests
+    {
+        [Theory]
+        [InlineData(1, "username", "password", "Admin", true)] // Корректные данные
+        [InlineData(2, "username", "password", "Moderator", true)] // Корректные данные
+        [InlineData(3, "username", "password", "User", true)] // Корректные данные
+        [InlineData(4, "thisisaverylongusernameexceedingfortycharacterslimit", "password", "Admin", false)] // Слишком длинное имя пользователя
+        [InlineData(5, "username", "thisisaverylongpasswordexceedingtwofiftysixcharacterslimitthisisaverylongpasswordexceedingtwofiftysixcharacterslimitthisisaverylongpasswordexceedingtwofiftysixcharacterslimitthisisaverylongpasswordexceedingtwofiftysixcharacterslimitthisisaverylongpasswordexceedingtwofiftysixcharacterslimitthisisaverylongpasswordexceedingtwofiftysixcharacterslimit", "Admin", false)] // Слишком длинный пароль
+        [InlineData(6, "username", "password", "InvalidRole", true)] // Корректные данные (невалидная роль, но проверка на роль отсутствует в методе)
+        public void IsCorrectUserData_Test(int id, string login, string password, string role, bool expectedResult)
+        {
+            // Arrange
+            var usersController = new UsersController(null); // Передаем null, так как в этом тесте нам не нужен контекст базы данных
+
+            // Act
+            var result = usersController.IsCorrectUserData(id, login, password, role);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+    }
+
+   public class ThemeControllerTests
+    {
+        [Theory]
+        [InlineData("ValidThemeName", true)] // Длина имени в пределах ограничений
+        [InlineData("ThisIsAVeryLongThemeNameExceedingFiftyCharactersLimitThisIsAVeryLongThemeNameExceedingFiftyCharactersLimitThisIsAVeryLongThemeNameExceedingFiftyCharactersLimitThisIsAVeryLongThemeNameExceedingFiftyCharactersLimit", false)] // Длина имени превышает ограничение
+        [InlineData("", true)] // Пустое имя
+        public void CheckThemeData_Returns_Correct_Result(string name, bool expectedResult)
+        {
+            // Arrange
+            var controller = new ThemeController(null);
+
+            // Act
+            var result = controller.CheckThemeData(name);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+    }
+    public class FolderControllerTests
+    {
+        [Theory]
+        [InlineData("ValidFolderName", true)] // Длина имени папки в пределах ограничений
+        [InlineData("ThisIsAVeryLongFolderNameExceedingFiftyCharactersLimitThisIsAVeryLongFolderNameExceedingFiftyCharactersLimitThisIsAVeryLongFolderNameExceedingFiftyCharactersLimitThisIsAVeryLongFolderNameExceedingFiftyCharactersLimit", false)] // Длина имени папки превышает ограничение
+        [InlineData("", true)] // Пустое имя папки
+        public void CheckFolderData_Returns_Correct_Result(string name, bool expectedResult)
+        {
+            // Arrange
+            var controller = new FolderController(null);
+
+            // Act
+            var result = controller.CheckFolderData(name);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+    }
+
+    public class ArticleControllerTests
+    {
+        [Theory]
+        [InlineData("ValidArticleName", true)] // Длина имени статьи в пределах ограничений
+        [InlineData("ThisIsAVeryLongArticleNameExceedingFiftyCharactersLimitThisIsAVeryLongArticleNameExceedingFiftyCharactersLimitThisIsAVeryLongArticleNameExceedingFiftyCharactersLimitThisIsAVeryLongArticleNameExceedingFiftyCharactersLimit", false)] // Длина имени статьи превышает ограничение
+        [InlineData("", true)] // Пустое имя статьи
+        public void CheckArticleData_Returns_Correct_Result(string name, bool expectedResult)
+        {
+            // Arrange
+            var controller = new ArticleController(null);
+
+            // Act
+            var result = controller.CheckArticleData(name);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+    }
 }

@@ -158,7 +158,7 @@ namespace AlgoLibrary.Controllers
             }
         }
 
-        private bool IsCorrectUserData(int id, string login, string password, string role)
+        public bool IsCorrectUserData(int id, string login, string password, string role)
         {
             if (login.Length > 40) return false;
             if (password.Length > 256) return false;
