@@ -52,7 +52,7 @@ Here are some screenshots of Algolibrary in action:
 
 ## Usage
 
-You can access the Algolibrary web application [here](https://a25308-f24f.u.d-f.pw/).
+You can access the Algolibrary web application [here](https://a25376-e01e.w.d-f.pw/).
 You can access the group for practice exercises on Codeforces [here](https://codeforces.com/group/eYghlTf5Xb/contests).
 
 ## Contributing
