@@ -41,7 +41,7 @@ namespace AlgoLibrary.Controllers
         .ThenBy(fa => fa.OrderNumber)
         .ToList();
             ViewBag.FolderArticles = folderArticles;
-            return View();
+            return View("Plan");
         }
     }
 }
