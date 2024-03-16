@@ -56,9 +56,9 @@ app.Use((context, next) =>
 {
     if (context.Session.GetString("UserRole") == null)
     {
-        context.Session.SetString("UserRole", UserRole.User.ToString());
+        context.Session.SetString("UserRole", UserRole.Admin.ToString());
         context.Session.SetInt32("UserId", -1);
-        context.Session.SetString("UserName", "");
+        context.Session.SetString("UserName", "admin");
     }
     return next();
 });
