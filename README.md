@@ -55,7 +55,7 @@ The application underwent thorough unit testing using the xUnit framework to ens
 
 ## Usage
 
-You can access the Algolibrary web application [here](https://a25376-e01e.w.d-f.pw/).
+You can access the Algolibrary web application [here](https://a25376-e01e.w.d-f.pw/) (is currently down).
 You can access the group for practice exercises on Codeforces [here](https://codeforces.com/group/eYghlTf5Xb/contests).
 
 ## Contributing
